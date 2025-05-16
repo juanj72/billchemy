@@ -8,6 +8,7 @@
 
 \*.so
 
+*.docx
 # Distribution / packaging
 
 .Python

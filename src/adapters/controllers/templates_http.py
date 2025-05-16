@@ -1,0 +1,24 @@
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
+from fastapi.responses import JSONResponse
+from pathlib import Path
+from src.usecases.invoices.save_template import SaveTemplate
+from src.dependencies import get_save_template_uc
+
+router = APIRouter()
+
+@router.post("/templates",status_code=201)
+async def upload_docx(
+    file: UploadFile = File(..., media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+    uc: SaveTemplate = Depends(get_save_template_uc)
+):
+   data = await file.read()
+   try:
+      saved_path:Path = uc.execute(file.filename, data)
+   except Exception as e:
+      raise HTTPException(status_code=400, detail=str(e))
+
+   return JSONResponse({
+      "status": "success",
+      "path":str(saved_path)
+   })
+

@@ -1,8 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from pathlib import Path
-from src.usecases.invoices.save_template import SaveTemplate
-from src.dependencies import get_save_template_uc
+from src.usecases.invoices.save_template import SaveTemplateUseCase
+from src.usecases.invoices.list_template import ListTemplateUseCase
+from src.dependencies import get_save_template_uc, get_list_template_uc
 
 
 router = APIRouter(prefix="/api/v1/invoices", tags=["invoices"])
@@ -17,7 +18,7 @@ async def upload_docx(
         ...,
         media_type=media_type,
     ),
-    uc: SaveTemplate = Depends(get_save_template_uc),
+    uc: SaveTemplateUseCase = Depends(get_save_template_uc),
 ):
     data = await file.read()
     try:
@@ -29,5 +30,5 @@ async def upload_docx(
 
 
 @router.get("/templates")
-async def list_templates(uc: SaveTemplate = Depends(get_save_template_uc)):
-    return list(uc.template_repository.list())
+async def list_templates(uc: ListTemplateUseCase = Depends(get_list_template_uc)):
+    return list(uc.execute())

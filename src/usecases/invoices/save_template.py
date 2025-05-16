@@ -1,8 +1,9 @@
 from src.domain.invoices.interfaces.template_repository import TemplateRepository
 from pathlib import Path
+from typing import Iterable
 
 
-class SaveTemplate:
+class SaveTemplateUseCase:
     def __init__(self, template_repository: TemplateRepository):
         self.template_repository = template_repository
 
@@ -12,3 +13,6 @@ class SaveTemplate:
 
         saver_path = self.template_repository.save(template_name, content)
         return saver_path
+
+    def list(self) -> Iterable[Path]:
+        return self.template_repository.list()

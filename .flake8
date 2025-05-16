@@ -16,7 +16,7 @@ exclude =
     build,
     dist,
     migrations,
-    tests
+    src/tests
 
 # Opcional: umbral de complejidad ciclomática; funciones con más de 10 ramas dan advertencia
 max-complexity = 10

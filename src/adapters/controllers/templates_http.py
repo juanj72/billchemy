@@ -7,9 +7,7 @@ from src.dependencies import get_save_template_uc
 
 router = APIRouter(prefix="/api/v1/invoices", tags=["invoices"])
 media_type = (
-    "application/vnd"+
-    ".openxmlformats-officedocument"+
-    ".wordprocessingml.document"
+    "application/vnd" + ".openxmlformats-officedocument" + ".wordprocessingml.document"
 )
 
 

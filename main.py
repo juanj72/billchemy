@@ -1,1 +1,1 @@
-from src.app.main import app
+from src.app.main import app  # noqa: F401

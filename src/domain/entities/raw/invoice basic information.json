@@ -1,0 +1,58 @@
+{
+  "numbering_range_id": 8,
+  "reference_code": "12345931AT",
+  "observation": "Esta es la descripción general de la venta",
+  "payment_method_code": 10,
+  "customer": {
+    "identification": "123456789",
+    "dv": 3,
+    "company": "",
+    "trade_name": "",
+    "names": "Alan Turing 29 Oct",
+    "address": "calle 1 # 2-68",
+    "email": "alanturing@enigmasas.com",
+    "phone": "1234567890",
+    "legal_organization_id": 2,
+    "tribute_id": 21,
+    "identification_document_id": 3,
+    "municipality_id": 980
+  },
+  "items": [
+    {
+      "code_reference": "12345",
+      "name": "producto de prueba",
+      "quantity": 1,
+      "discount_rate": 20,
+      "price": 50000,
+      "tax_rate": "19.00",
+      "unit_measure_id": 70,
+      "standard_code_id": 1,
+      "is_excluded": 0,
+      "tribute_id": 1,
+      "withholding_taxes": [
+        {
+          "code": "06",
+          "withholding_tax_rate": 7.38
+        },
+        {
+          "code": "05",
+          "withholding_tax_rate": 15.12
+        }
+      ]
+    },
+    {
+      "code_reference": "12345",
+      "name": "producto de prueba 2",
+      "quantity": 1,
+      "discount": 0,
+      "discount_rate": 0,
+      "price": 50000,
+      "tax_rate": "5.00",
+      "unit_measure_id": 70,
+      "standard_code_id": 1,
+      "is_excluded": 0,
+      "tribute_id": 1,
+      "withholding_taxes": []
+    }
+  ]
+}

@@ -4,9 +4,12 @@ from pathlib import Path
 from src.usecases.invoices.save_template import SaveTemplate
 from src.dependencies import get_save_template_uc
 
-router = APIRouter()
+router = APIRouter(
+   prefix="/api/v1/invoices",
+   tags=["invoices"]
+)
 
-@router.post("/templates",status_code=201)
+@router.post("/templates/upload",status_code=201)
 async def upload_docx(
     file: UploadFile = File(..., media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
     uc: SaveTemplate = Depends(get_save_template_uc)
@@ -22,3 +25,6 @@ async def upload_docx(
       "path":str(saved_path)
    })
 
+@router.get("/templates")
+async def list_templates(uc: SaveTemplate = Depends(get_save_template_uc)):
+   return list(uc.template_repository.list())

@@ -1,5 +1,6 @@
 from pathlib import Path
 from src.domain.invoices.interfaces.template_repository import TemplateRepository
+from typing import Iterable
 
 class FileSystemTemplateRepository(TemplateRepository):
     def __init__(self, base_dir:Path):
@@ -10,3 +11,6 @@ class FileSystemTemplateRepository(TemplateRepository):
         template_path = self.base_dir / template_name
         template_path.write_bytes(content)
         return template_path
+
+    def list(self) -> Iterable[str]:
+        return self.base_dir.iterdir()

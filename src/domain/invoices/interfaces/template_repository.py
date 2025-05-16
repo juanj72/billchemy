@@ -13,7 +13,7 @@ class TemplateRepository(ABC):
     #     # devuelve el template
     #     pass
 
-    # @abstractmethod
-    # def list(self) -> Iterable[str]:
-    #     # devuelve la lista de templates
-    #     pass
+    @abstractmethod
+    def list(self) -> Iterable[str]:
+        # devuelve la lista de templates
+        pass

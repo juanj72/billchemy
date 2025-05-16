@@ -22,5 +22,4 @@ jobs:
           poetry run mypy src/
             --ignore-missing-imports \
             --check-untyped-defs \
-            --explicit-package-bases src=src \
-            src/
+            --explicit-package-bases src=src

@@ -2,8 +2,9 @@ from pathlib import Path
 from src.domain.invoices.interfaces.template_repository import TemplateRepository
 from typing import Iterable
 
+
 class FileSystemTemplateRepository(TemplateRepository):
-    def __init__(self, base_dir:Path):
+    def __init__(self, base_dir: Path):
         self.base_dir = base_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
@@ -12,5 +13,5 @@ class FileSystemTemplateRepository(TemplateRepository):
         template_path.write_bytes(content)
         return template_path
 
-    def list(self) -> Iterable[str]:
+    def list(self) -> Iterable[Path]:
         return self.base_dir.iterdir()

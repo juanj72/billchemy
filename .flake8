@@ -1,0 +1,22 @@
+# .flake8
+
+[flake8]
+# Longitud máxima de línea (ajústalo a tu gusto, p. ej. 88 para Black)
+max-line-length = 88
+
+# Ignorar algunos errores si usas Black o por convención:
+#  E203 (whitespace before ':') y W503 (line break before binary operator)
+extend-ignore = E203, W503
+
+# Qué carpetas o archivos excluir del linting
+exclude =
+    .venv,
+    .git,
+    __pycache__,
+    build,
+    dist,
+    migrations,
+    tests
+
+# Opcional: umbral de complejidad ciclomática; funciones con más de 10 ramas dan advertencia
+max-complexity = 10

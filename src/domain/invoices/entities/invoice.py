@@ -28,36 +28,37 @@ class Customer:
     phone: str
 
     def __post_init__(self):
-        if self.identification is "" or self.identification is None:
+
+        if self.identification == "" or self.identification is None:
             raise ValueError("Identification is required")
 
-        if self.names is "" or self.names is None:
+        if self.names == "" or self.names is None:
             raise ValueError("Names is required")
 
-        if self.address is "" or self.address is None:
+        if self.address == "" or self.address is None:
             raise ValueError("Address is required")
 
-        if self.email is "" or self.email is None:
+        if self.email == "" or self.email is None:
             raise ValueError("Email is required")
 
-        if self.phone is "" or self.phone is None:
+        if self.phone == "" or self.phone is None:
             raise ValueError("Phone is required")
 
 
 @dataclass
 class Invoice:
-    #numbering_range_id: int
+    # numbering_range_id: int
     reference_code: str
     observation: str
     payment_method_code: int
     items: List[Item]
 
     def __post_init__(self):
-        if self.reference_code is "" or self.reference_code is None:
+        if self.reference_code == "" or self.reference_code is None:
             raise ValueError("Reference code is required")
 
-        if self.payment_method_code is "" or self.payment_method_code is None:
+        if self.payment_method_code == "" or self.payment_method_code is None:
             raise ValueError("Payment method code is required")
 
-        if self.items is "" or self.items is None:
-            raise ValueError("Items is required")    
+        if self.items == "" or self.items is None:
+            raise ValueError("Items is required")

@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Iterable
+from pathlib import Path
 
 
 class TemplateRepository(ABC):
     @abstractmethod
-    def save(self, template_name: str, content: bytes) -> None:
+    def save(self, template_name: str, content: bytes) -> Path:
         # almacena/reemplaza el template en el sistema
         pass
 
@@ -14,6 +15,6 @@ class TemplateRepository(ABC):
     #     pass
 
     @abstractmethod
-    def list(self) -> Iterable[str]:
+    def list(self) -> Iterable[Path]:
         # devuelve la lista de templates
         pass

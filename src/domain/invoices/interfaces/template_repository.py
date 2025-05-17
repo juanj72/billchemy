@@ -18,3 +18,8 @@ class TemplateRepository(ABC):
     def list(self) -> Iterable[Path]:
         # devuelve la lista de templates
         pass
+
+    @abstractmethod
+    def get_template(self, template_name: str) -> bool:
+        # devuelve el template
+        pass

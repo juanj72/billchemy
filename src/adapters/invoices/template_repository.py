@@ -15,3 +15,7 @@ class FileSystemTemplateRepository(TemplateRepository):
 
     def list(self) -> Iterable[Path]:
         return self.base_dir.iterdir()
+
+    def get_template(self, template_name: str) -> bool:
+        template_path = self.base_dir / template_name
+        return template_path.exists()

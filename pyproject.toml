@@ -10,7 +10,11 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi (>=0.115.12,<0.116.0)",
     "uvicorn[standard] (>=0.34.2,<0.35.0)",
-    "python-multipart (>=0.0.20,<0.0.21)"
+    "python-multipart (>=0.0.20,<0.0.21)",
+    "docxtpl (>=0.20.0,<0.21.0)",
+    "mammoth (>=1.9.0,<2.0.0)",
+    "weasyprint (>=65.1,<66.0)",
+    "pydantic[email] (>=2.11.4,<3.0.0)"
 ]
 
 [tool.poetry]

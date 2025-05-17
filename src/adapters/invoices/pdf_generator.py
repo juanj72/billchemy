@@ -1,38 +1,41 @@
-# src/adapters/invoices/pdf_generator.py
+import subprocess
 from pathlib import Path
-from io import BytesIO
-from docxtpl import DocxTemplate
-import mammoth
-from weasyprint import HTML
-from weasyprint.text.fonts import FontConfiguration
 from src.domain.invoices.interfaces.pdf_generator import PDFGenerator
-from src.domain.invoices.entities.invoice import Invoice
 
 
-class DocxToPdfGenerator(PDFGenerator):
-    def __init__(self, templates_dir: Path):
-        self.templates_dir = templates_dir
-        self.font_config = FontConfiguration()
+class LibreOfficePDFGenerator(PDFGenerator):
+    """
+    Adaptador que convierte un .docx a PDF usando LibreOffice headless,
+    guardando el PDF en un directorio de salida y devolviendo sus bytes.
+    """
 
-    def generate(self, invoice: Invoice, template_name: Path) -> bytes:
-        template_path = self.templates_dir / template_name
-        tpl = DocxTemplate(str(template_path))
-        tpl.render(
-            {
-                "invoice": invoice,
-                "items": invoice.items,
-            }
-        )
+    def __init__(self, output_dir: Path):
+        self.output_dir = output_dir.resolve()
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        docx_io = BytesIO()  # TODO: cambiar la forma en que se convierte a pdf
-        tpl.save(docx_io)
-        docx_io.seek(0)
+    def generate(self, template_path: Path) -> bytes:
 
-        html = mammoth.convert_to_html(docx_io).value
+        # Ejecutar la conversión indicando el directorio de salida
+        cmd = [
+            (
+                "soffice"
+                if subprocess.call(["which", "soffice"], stdout=subprocess.DEVNULL) == 0
+                else "libreoffice"
+            ),
+            "--headless",
+            "--convert-to",
+            "pdf",
+            "--outdir",
+            str(self.output_dir),
+            str(template_path),
+        ]
+        subprocess.run(cmd, check=True)
 
-        pdf_bytes = (
-            HTML(string=html, base_url=str(self.templates_dir))
-            .render(font_config=self.font_config)
-            .write_pdf()
-        )
-        return pdf_bytes
+        # Construir la ruta del PDF resultante
+        pdf_path = self.output_dir / f"{template_path.stem}.pdf"
+        if not pdf_path.exists():
+            raise RuntimeError(f"PDF conversion failed, file not found: {pdf_path}")
+
+        # Leer y devolver el contenido en bytes
+        data = pdf_path.read_bytes()
+        return data

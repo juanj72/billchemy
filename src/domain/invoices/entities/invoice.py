@@ -17,6 +17,10 @@ class Item:
         if self.name == "" or self.name is None:
             raise ValueError("Name is required")
 
+    @property
+    def total(self):
+        return self.price * self.quantity
+
 
 @dataclass
 class Customer:
@@ -53,6 +57,10 @@ class Invoice:
     payment_method_code: int
     items: List[Item]
     customer: Customer
+
+    @property
+    def total(self):
+        return sum(item.total for item in self.items)
 
     def __post_init__(self):
         if self.reference_code == "" or self.reference_code is None:

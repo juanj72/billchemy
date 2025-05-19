@@ -38,7 +38,10 @@ class LibreOfficePDFGenerator(PDFGenerator):
         # Construir la ruta del PDF resultante
         pdf_path = self.output_dir / f"{rendered_path.stem}.pdf"
         if not pdf_path.exists():
-            raise RuntimeError(f"PDF conversion failed, file not found: {pdf_path}")
+            raise RuntimeError(
+                "PDF conversion failed: please, check your template file,"
+                + "check the template, it may be corrupted."
+            )
 
         data = pdf_path.read_bytes()
         return data

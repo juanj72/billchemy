@@ -53,7 +53,7 @@ async def generate_pdf(
 
     try:
         pdf_bytes = uc.execute(invoice_entity, Path(template_name))
-    except ValueError as e:
+    except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
     content_disposition = (

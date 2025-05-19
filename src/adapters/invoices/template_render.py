@@ -1,4 +1,3 @@
-# src/adapters/invoices/pdf_generator.py
 from pathlib import Path
 from docxtpl import DocxTemplate
 from src.domain.invoices.interfaces.template_render import TemplateRender

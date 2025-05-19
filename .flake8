@@ -16,7 +16,6 @@ exclude =
     build,
     dist,
     migrations,
-    src/tests,
     .github/workflows/linter.yml
 
 # Opcional: umbral de complejidad ciclomática; funciones con más de 10 ramas dan advertencia

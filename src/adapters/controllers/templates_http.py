@@ -11,7 +11,7 @@ from src.dependencies import (
     get_list_template_uc,
     get_generate_pdf_uc,
 )
-from src.schemas.invoice_schema import InvoiceRequest, InvoiceResponse
+from src.schemas.invoice_schema import InvoiceRequest
 
 
 router = APIRouter(prefix="/api/v1/invoices", tags=["invoices"])
@@ -42,28 +42,43 @@ async def list_templates(uc: ListTemplateUseCase = Depends(get_list_template_uc)
     return list(uc.execute())
 
 
-@router.post("/generate", response_model=InvoiceResponse)
+@router.post(
+    "/generate",
+    summary="Genera un PDF a partir de un template",
+    description=(
+        "Recibe un `.docx` válido (guardado desde Microsoft Word) "
+        "y devuelve el PDF resultante. No se soportan `.odt` ni conversiones "
+        "simples a `.docx`."
+    ),
+)
 async def generate_pdf(
     req: InvoiceRequest,
     uc: GeneratePDFUseCase = Depends(get_generate_pdf_uc),
 ):
-    # extraer domain
-    invoice_entity = req.invoice.to_domain()
-    template_name = req.template_name
 
     try:
-        pdf_bytes = uc.execute(invoice_entity, Path(template_name))
-    except Exception as e:
+        invoice_entity = req.invoice.to_domain()
+    except ValueError as e:
+
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        pdf_bytes = uc.execute(invoice_entity, req.template_name)
+    except FileNotFoundError as e:
+
         raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
 
-    content_disposition = (
-        "attachment;" + f"filename={invoice_entity.reference_code}.pdf"
-    )
+        raise HTTPException(
+            status_code=503, detail=f"Error to generate PDF, check your template,{e}"
+        )
+    except Exception:
 
-    file_response = StreamingResponse(
+        raise HTTPException(status_code=500, detail="Error interno del servidor")
+
+    filename = f"{invoice_entity.reference_code}.pdf"
+    return StreamingResponse(
         BytesIO(pdf_bytes),
         media_type="application/pdf",
-        headers={"Content-Disposition": content_disposition},
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
-
-    return file_response

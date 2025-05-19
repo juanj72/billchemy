@@ -76,7 +76,7 @@ def test_customer_invalid(field, bad):
     }
     kwargs[field] = bad
     with pytest.raises(ValueError) as exc:
-        Customer(**kwargs)
+        Customer(**kwargs)  # type: ignore
     msg = str(exc.value)
     # chequea que mencione el campo
     assert field.capitalize() in msg or "required" in msg
@@ -146,7 +146,7 @@ def test_invoice_invalid_items(sample_customer):
             reference_code="INV-001",
             observation="",
             payment_method_code=1,
-            items=None,
+            items=None,  # type: ignore
             customer=sample_customer,
         )
     assert "Items is required" in str(exc.value)

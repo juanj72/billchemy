@@ -22,7 +22,9 @@ class GeneratePDFUseCase:
         available = [p.name for p in self.template_repository.list()]
         if str(template_name) not in available:
             raise ValueError(f"Template «{template_name}» not found")
+        try:
+            rendered_path = self.template_render.render(invoice, template_name)
 
-        return self.pdf_generator.generate(
-            self.template_render.render(invoice, template_name)
-        )
+            return self.pdf_generator.generate(rendered_path)
+        except Exception as e:
+            raise e

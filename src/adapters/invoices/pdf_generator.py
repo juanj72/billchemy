@@ -13,29 +13,32 @@ class LibreOfficePDFGenerator(PDFGenerator):
         self.output_dir = output_dir.resolve()
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def generate(self, template_path: Path) -> bytes:
+    def _clear_output_dir(self):
+        for old in self.output_dir.glob("*.pdf"):
+            try:
+                old.unlink()
+            except OSError:
+                pass
 
+    def generate(self, rendered_path: Path) -> bytes:
+        self._clear_output_dir()
         # Ejecutar la conversión indicando el directorio de salida
         cmd = [
-            (
-                "soffice"
-                if subprocess.call(["which", "soffice"], stdout=subprocess.DEVNULL) == 0
-                else "libreoffice"
-            ),
+            "soffice",
             "--headless",
             "--convert-to",
             "pdf",
             "--outdir",
             str(self.output_dir),
-            str(template_path),
+            str(rendered_path),
         ]
-        subprocess.run(cmd, check=True)
-
+        r = subprocess.run(cmd, check=True)
+        if r.returncode != 0:
+            raise RuntimeError("PDF conversion failed")
         # Construir la ruta del PDF resultante
-        pdf_path = self.output_dir / f"{template_path.stem}.pdf"
+        pdf_path = self.output_dir / f"{rendered_path.stem}.pdf"
         if not pdf_path.exists():
             raise RuntimeError(f"PDF conversion failed, file not found: {pdf_path}")
 
-        # Leer y devolver el contenido en bytes
         data = pdf_path.read_bytes()
         return data

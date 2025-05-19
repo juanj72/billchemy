@@ -60,8 +60,10 @@ async def generate_pdf(
         "attachment;" + f"filename={invoice_entity.reference_code}.pdf"
     )
 
-    return StreamingResponse(
+    file_response = StreamingResponse(
         BytesIO(pdf_bytes),
         media_type="application/pdf",
         headers={"Content-Disposition": content_disposition},
     )
+
+    return file_response

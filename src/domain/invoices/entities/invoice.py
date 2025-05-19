@@ -52,6 +52,7 @@ class Invoice:
     observation: str
     payment_method_code: int
     items: List[Item]
+    customer: Customer
 
     def __post_init__(self):
         if self.reference_code == "" or self.reference_code is None:

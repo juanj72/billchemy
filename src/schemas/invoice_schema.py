@@ -59,6 +59,7 @@ class InvoiceDataSchema(BaseModel):
             observation=self.observation,
             payment_method_code=self.payment_method_code,
             items=[item.to_domain() for item in self.items],
+            customer=self.customer.to_domain(),
         )
 
 

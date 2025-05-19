@@ -7,10 +7,10 @@ from src.domain.invoices.entities.invoice import Invoice
 
 
 class DocxRender(TemplateRender):
-    def __init__(self, templates_dir: Path, output_dir: Path):
+    def __init__(self, templates_dir: Path, rendered_dir: Path):
         self.templates_dir = templates_dir.resolve()
-        self.output_dir = output_dir.resolve()
-        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.rendered_dir = rendered_dir.resolve()
+        self.rendered_dir.mkdir(parents=True, exist_ok=True)
 
     def render(self, invoice: Invoice, template_name: Path) -> Path:
         original = self.templates_dir / template_name
@@ -21,11 +21,12 @@ class DocxRender(TemplateRender):
             {
                 "invoice": invoice,
                 "items": invoice.items,
+                "customer": invoice.customer,
             }
         )
 
         temp_name = f"rendered_{invoice.reference_code}.docx"
-        temp_docx = self.output_dir / temp_name
+        temp_docx = self.rendered_dir / temp_name
         tpl.save(str(temp_docx))
 
         return Path(temp_docx)

@@ -8,6 +8,7 @@ from src.adapters.invoices.pdf_generator import LibreOfficePDFGenerator
 
 
 TEMPLATES_DIR = Path("src/raw/templates")
+RENDERED_DIR = Path("src/raw/rendered")
 OUTPUT_DIR = Path("src/raw/pdfs")
 
 
@@ -22,7 +23,7 @@ def get_list_template_uc() -> ListTemplateUseCase:
 
 
 def get_generate_pdf_uc() -> GeneratePDFUseCase:
-    template_render = DocxRender(templates_dir=TEMPLATES_DIR, output_dir=OUTPUT_DIR)
+    template_render = DocxRender(templates_dir=TEMPLATES_DIR, rendered_dir=RENDERED_DIR)
     repo = FileSystemTemplateRepository(base_dir=TEMPLATES_DIR)
     pdf_generator = LibreOfficePDFGenerator(output_dir=OUTPUT_DIR)
 

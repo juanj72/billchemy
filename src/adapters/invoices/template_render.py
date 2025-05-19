@@ -1,9 +1,9 @@
 # src/adapters/invoices/pdf_generator.py
 from pathlib import Path
 from docxtpl import DocxTemplate
-from datetime import datetime
 from src.domain.invoices.interfaces.template_render import TemplateRender
 from src.domain.invoices.entities.invoice import Invoice
+from src.utils.mappers import invoice_to_template_context
 
 
 class DocxRender(TemplateRender):
@@ -17,14 +17,8 @@ class DocxRender(TemplateRender):
 
         # Render con docxtpl
         tpl = DocxTemplate(str(original))
-        tpl.render(
-            {
-                "invoice": invoice,
-                "items": invoice.items,
-                "customer": invoice.customer,
-                "today": datetime.now().date(),
-            }
-        )
+        invoice_ = invoice_to_template_context(invoice)
+        tpl.render(invoice_)
 
         temp_name = f"rendered_{invoice.reference_code}.docx"
         temp_docx = self.rendered_dir / temp_name

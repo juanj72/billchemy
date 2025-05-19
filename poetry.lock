@@ -313,6 +313,18 @@ pycodestyle = ">=2.13.0,<2.14.0"
 pyflakes = ">=3.3.0,<3.4.0"
 
 [[package]]
+name = "format-currency"
+version = "0.0.10"
+description = "A no-frill currency formatting library."
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "format_currency-0.0.10-py3-none-any.whl", hash = "sha256:eedecf0b2c4d21b2435eff3eed95658160d0602c444f921dd22ce4bfab7735c7"},
+    {file = "format_currency-0.0.10.tar.gz", hash = "sha256:15f01e5aaecf7c636815911cf0cbab0b117c8a6bd992d61a666f5e038cce32d9"},
+]
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -1474,4 +1486,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "ebf342982ce19bb746070fdf63f3e3503d2ab0eab27a6b21c6b452d47da80dc8"
+content-hash = "e7eeca2b831b3d04e508ddb3dabc14e46ecbe2886974be7f2cf78a7ca28363ca"

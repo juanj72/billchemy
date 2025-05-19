@@ -20,7 +20,12 @@ media_type = (
 )
 
 
-@router.post("/templates/upload", status_code=201)
+@router.post(
+    "/templates/upload",
+    status_code=201,
+    summary="Guarda un template",
+    description=("Recibe un `.docx` valido (guardado desde Microsoft Word)"),
+)
 async def upload_docx(
     file: UploadFile = File(
         ...,
@@ -63,7 +68,7 @@ async def generate_pdf(
         raise HTTPException(status_code=400, detail=str(e))
 
     try:
-        pdf_bytes = uc.execute(invoice_entity, req.template_name)
+        pdf_bytes = uc.execute(invoice_entity, Path(req.template_name))
     except FileNotFoundError as e:
 
         raise HTTPException(status_code=404, detail=str(e))
@@ -72,9 +77,11 @@ async def generate_pdf(
         raise HTTPException(
             status_code=503, detail=f"Error to generate PDF, check your template,{e}"
         )
-    except Exception:
+    except Exception as einternal:
 
-        raise HTTPException(status_code=500, detail="Error interno del servidor")
+        raise HTTPException(
+            status_code=500, detail=f"Error interno del servidor {einternal}"
+        )
 
     filename = f"{invoice_entity.reference_code}.pdf"
     return StreamingResponse(

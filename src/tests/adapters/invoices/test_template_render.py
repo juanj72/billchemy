@@ -2,6 +2,7 @@ import zipfile
 import pytest
 from src.adapters.invoices.template_render import DocxRender  # noqa
 from src.domain.invoices.entities.invoice import Invoice, Item, Customer
+from pathlib import Path
 
 
 @pytest.fixture
@@ -10,23 +11,7 @@ def simple_docx(tmp_path):
     Crea un .docx mínimo con un placeholder {{ reference_code }}
     en word/document.xml, para comprobar que DocxRender lo sustituye.
     """
-    tpl = tmp_path / "template.docx"
-    with zipfile.ZipFile(tpl, "w") as z:
-        # ZIP mínimo: content types
-        z.writestr(
-            "[Content_Types].xml",
-            '<?xml version="1.0"?>'
-            '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'  # noqa
-            "</Types>",
-        )
-        # documento con el marcador
-        z.writestr(
-            "word/document.xml",
-            '<?xml version="1.0"?>'
-            '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'  # noqa
-            "<w:body><w:p><w:r><w:t>{{ reference_code }}</w:t></w:r></w:p>"
-            "</w:body></w:document>",
-        )
+    tpl = Path("src/raw/templates/template2.docx")
     return tpl
 
 

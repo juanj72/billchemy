@@ -8,4 +8,6 @@ class ListTemplateUseCase:
         self.template_repository = template_repository
 
     def execute(self) -> Iterable[Path]:
-        return self.template_repository.list()
+        name_list = [p.name for p in self.template_repository.list()]
+
+        return name_list

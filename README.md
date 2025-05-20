@@ -128,37 +128,15 @@ Instalación
 
     Ubuntu / Debian
 
-sudo apt update
-sudo apt install -y libreoffice-core libreoffice-writer libreoffice-headless
+* **de igual manera puedes ejecutar el docker para poder tener acceso al proyecto
 
-CentOS / RHEL (con EPEL)
+   1. ejecutar :
 
-sudo dnf install -y epel-release
-sudo dnf install -y libreoffice-headless
+   ```bash
+   docker-compose up -d billchemy
+   ```
+   2. acceder a la url localhost:8000
 
-Alpine Linux
-
-    # habilita el repositorio edge-testing si es necesario
-    apk add --no-cache libreoffice libreoffice-writer
-
-Verificación
-
-soffice --version
-# o
-libreoffice --version
-
-Deberías ver algo como:
-
-LibreOffice 7.4.2.2 40(Build:2)
-
-🚀 Uso en Docker
-
-Si vas a contenerizar la aplicación, añade estas líneas en tu Dockerfile antes de instalar dependencias de Python:
-
-RUN apt-get update && \
-    apt-get install -y libreoffice-core libreoffice-writer libreoffice-headless
-
-De este modo, al levantar el contenedor, soffice estará listo para convertir tus plantillas automáticamente.
 
 ## 📖 Contribuciones
 

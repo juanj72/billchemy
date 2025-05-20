@@ -7,12 +7,10 @@ from pathlib import Path
 
 @pytest.fixture
 def simple_docx():
-    """
-    Crea un .docx mínimo con un placeholder {{ reference_code }}
-    en word/document.xml, para comprobar que DocxRender lo sustituye.
-    """
-    tpl = Path("src/tests/raw/templates/template2.docx")
-    return tpl
+    # __file__ = .../src/tests/adapters/invoices/test_template_render.py
+    # parents[3] = <project-root>/src
+    project_src = Path(__file__).resolve().parents[3]
+    return project_src / "raw" / "templates" / "template2.docx"
 
 
 @pytest.fixture

@@ -8,7 +8,7 @@
 
 \*.so
 
-src/raw/**/**/*.docx
+src/raw/**/**/*1.docx
 
 *.pdf
 # Distribution / packaging

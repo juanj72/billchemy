@@ -6,11 +6,13 @@ from pathlib import Path
 
 
 @pytest.fixture
-def simple_docx():
-    # __file__ = .../src/tests/adapters/invoices/test_template_render.py
-    # parents[3] = <project-root>/src
-    project_src = Path(__file__).resolve().parents[3]
-    return project_src / "raw" / "templates" / "template2.docx"
+def simple_docx(tmp_path):  # TODO: ajustar este test, por mocked de word
+    """
+    Crea un .docx mínimo con un placeholder {{ reference_code }}
+    en word/document.xml, para comprobar que DocxRender lo sustituye.
+    """
+    tpl = Path("src/raw/templates/template2.docx")
+    return tpl
 
 
 @pytest.fixture

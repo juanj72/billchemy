@@ -11,7 +11,7 @@ def simple_docx():
     Crea un .docx mínimo con un placeholder {{ reference_code }}
     en word/document.xml, para comprobar que DocxRender lo sustituye.
     """
-    tpl = Path("src/raw/templates/template2.docx")
+    tpl = Path("src/tests/raw/templates/template2.docx")
     return tpl
 
 

@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 @pytest.fixture
-def simple_docx(tmp_path):
+def simple_docx():
     """
     Crea un .docx mínimo con un placeholder {{ reference_code }}
     en word/document.xml, para comprobar que DocxRender lo sustituye.

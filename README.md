@@ -17,8 +17,7 @@ billchemy/
 │   ├── adapters/                # Implementaciones de puertos: repos, PDF, integraciones
 │   ├── schemas/                 # Modelos Pydantic de request/response
 │   ├── dependencies.py          # Wiring de dependencias
-│   └── templates/               # Plantillas Jinja2 / repositorio de facturas
-├── tests/                       # Pruebas unitarias e integración
+│   └── templates/               # Plantillas Jinja2 / repositorio de facturas                      # Pruebas unitarias e integración
 ├── pyproject.toml               # Configuración de Poetry y metadatos
 ├── poetry.lock                  # Versión exacta de dependencias
 ├── mypy.ini                     # Configuración de MyPy
@@ -58,6 +57,11 @@ billchemy/
    ```bash
    poetry shell
    ```
+   o
+
+   ```bash
+   source .venv/bin/activate
+   ```
 
 ---
 
@@ -75,7 +79,7 @@ billchemy/
 
 ## 💡 Endpoints Principales
 
-* **`POST /api/v1/invoices/templates/upload`**: Recibe un archivo `.docx` o `.html` y lo guarda como plantilla.
+* **`POST /api/v1/invoices/templates/upload`**: Recibe un archivo `.docx` o  y lo guarda como plantilla.
 * **`GET  /api/v1/invoices/templates`**: Lista las plantillas disponibles.
 * **`POST /api/v1/invoices/generate`**: Genera un PDF de factura a partir de una plantilla y datos JSON.
 
@@ -95,15 +99,15 @@ billchemy/
 
 ## 🧪 Pruebas
 
-* **Unitarias** con `pytest` en `tests/`:
+* **Unitarias** con `pytest` en `src/tests/`:
 
   ```bash
-  pytest --maxfail=1 --disable-warnings -q
+  poetry run pytest -v
   ```
 * **Cobertura**:
 
   ```bash
-  pytest --cov=src --cov-report=term-missing
+  poetry run pytest
   ```
 
 ---

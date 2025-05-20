@@ -121,10 +121,51 @@ billchemy/
 
 ---
 
+## ⚙️ Requisitos del Sistema
+
+Para poder convertir las plantillas .docx a PDF, tu entorno debe contar con LibreOffice en modo headless. Asegúrate de que el binario soffice (o libreoffice) está disponible en el PATH.
+Instalación
+
+    Ubuntu / Debian
+
+sudo apt update
+sudo apt install -y libreoffice-core libreoffice-writer libreoffice-headless
+
+CentOS / RHEL (con EPEL)
+
+sudo dnf install -y epel-release
+sudo dnf install -y libreoffice-headless
+
+Alpine Linux
+
+    # habilita el repositorio edge-testing si es necesario
+    apk add --no-cache libreoffice libreoffice-writer
+
+Verificación
+
+soffice --version
+# o
+libreoffice --version
+
+Deberías ver algo como:
+
+LibreOffice 7.4.2.2 40(Build:2)
+
+🚀 Uso en Docker
+
+Si vas a contenerizar la aplicación, añade estas líneas en tu Dockerfile antes de instalar dependencias de Python:
+
+RUN apt-get update && \
+    apt-get install -y libreoffice-core libreoffice-writer libreoffice-headless
+
+De este modo, al levantar el contenedor, soffice estará listo para convertir tus plantillas automáticamente.
+
 ## 📖 Contribuciones
 
 ¡Bienvenidas! Abre un issue o un pull request. Sigue el estilo de commit `feat:`, `fix:`, etc., y asegúrate de que todos los hooks de pre-commit pasen antes de enviar.
 
 ---
+
+
 
 *Billchemy* © 2025

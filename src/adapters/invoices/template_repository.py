@@ -8,7 +8,9 @@ class FileSystemTemplateRepository(TemplateRepository):
         self.base_dir = base_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
-    def save(self, template_name: str, content: bytes) -> Path:
+    def save(
+        self, template_name: str, content: bytes
+    ) -> Path:  # TODO: change this method of save
         template_path = self.base_dir / template_name
         template_path.write_bytes(content)
         return template_path

@@ -9,11 +9,6 @@ class TemplateRepository(ABC):
         # almacena/reemplaza el template en el sistema
         pass
 
-    # @abstractmethod
-    # def load(self, template_name: str) -> str:
-    #     # devuelve el template
-    #     pass
-
     @abstractmethod
     def list(self) -> Iterable[Path]:
         # devuelve la lista de templates
